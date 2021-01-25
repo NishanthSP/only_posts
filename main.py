@@ -9,10 +9,10 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:@localhost/codingthunder"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:@localhost/codingthunder"
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 
 
 
@@ -29,7 +29,7 @@ class Posts(db.Model):
 
 @app.route("/", methods=['GET'])
 def post_route():
-    post = Posts.query.filter_by().all()
+#     post = Posts.query.filter_by().all()
     return render_template('post.html', post=post)
 
 
