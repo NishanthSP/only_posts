@@ -5,23 +5,11 @@ import json
 from datetime import datetime
 
 
-with open('config.json', 'r') as c:
-    params = json.load(c)["params"]
 
-local_server = True
+
 app = Flask(__name__)
-# app.config.update(
-#     MAIL_SERVER = 'smtp.gmail.com',
-#     MAIL_PORT = '465',
-#     MAIL_USE_SSL = True,
-#     MAIL_USERNAME = params['gmail-user'],
-#     MAIL_PASSWORD=  params['gmail-password']
-# )
-mail = Mail(app)
-if(local_server):
-    app.config['SQLALCHEMY_DATABASE_URI'] = params['local_uri']
-else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = params['prod_uri']
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:@localhost/codingthunder"
 
 db = SQLAlchemy(app)
 
@@ -38,24 +26,11 @@ class Posts(db.Model):
     # img_file = db.Column(db.String(12), nullable=True)
 
 
-@app.route("/")
+@app.route("/", methods=['GET'])
 def post_route():
     post = Posts.query.filter_by().all()
-    return render_template('post.html', params=params, post=post)
+    return render_template('post.html', post=post)
 
-
-@app.route("/post", methods=['GET'])
-
-
-@app.route("/about")
-def about():
-    return render_template('about.html', params=params)
-
-
-
-@app.route("/post")
-def post():
-    return render_template('post.html', params=params)
 
 
 app.run(debug=True)
